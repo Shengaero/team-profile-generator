@@ -1,0 +1,34 @@
+{
+  "name": "team-profile-generator",
+  "version": "0.1.0",
+  "description": "An HTML generator for team member profiles",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shengaero/team-profile-generator.git"
+  },
+  "keywords": [
+    "HTML",
+    "generator",
+    "profiles"
+  ],
+  "author": "Kaidan Gustave",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Shengaero/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/Shengaero/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^9.1.2"
+  },
+  "devDependencies": {
+    "jest": "^29.0.3"
+  }
+}

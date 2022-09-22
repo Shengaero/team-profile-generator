@@ -1,0 +1,12 @@
+# PROJECT #
+## includes ##
+!__test__/*
+!lib/*
+!src/*
+!dist/*
+## excludes ##
+dev/
+
+# NODE #
+## excludes ##
+node_modules/
