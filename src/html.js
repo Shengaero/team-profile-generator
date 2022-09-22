@@ -144,19 +144,24 @@ function parseValue(content) {
 
 const htmlTag = (name, content = '', attr = {}, autoClosing = false) => new HTMLTag(name, content, attr, autoClosing);
 
-const doc = (content = null, attr = {}) => new HTMLDocument(content, {lang: 'en', ...attr})
+const doc = (content = null, attr = {}) => new HTMLDocument(content, {lang: 'en', ...attr});
 const html = (content = null, attr = {}) => htmlTag('html', content, {...attr});
 const head = (content = null, attr = {}) => htmlTag('head', content, attr);
 const meta = (attr = {}) => htmlTag('meta', null, {...attr}, true);
 const link = (rel = null, href = null, attr = {}) => htmlTag('link', null, {rel: rel, href: href, ...attr}, true);
 const title = (content = null, attr = {}) => htmlTag('title', content, {...attr});
 const body = (content = null, attr = {}) => htmlTag('body', content, attr);
+const header = (content = null, attr = {}) => htmlTag('header', content, attr);
 const h1 = (content = null, attr = {}) => htmlTag('h1', content, attr);
 const h2 = (content = null, attr = {}) => htmlTag('h2', content, attr);
 const h3 = (content = null, attr = {}) => htmlTag('h3', content, attr);
+const h4 = (content = null, attr = {}) => htmlTag('h4', content, attr);
+const h5 = (content = null, attr = {}) => htmlTag('h5', content, attr);
 const p = (content = null, attr = {}) => htmlTag('p', content, attr);
-const a = (content = null, attr = {}) => htmlTag('a', content, attr);
+const a = (href, content = null, attr = {}) => htmlTag('a', content, {href: href, ...attr});
+const ul = (content = null, attr = {}) => htmlTag('ul', content, attr);
+const li = (content = null, attr = {}) => htmlTag('li', content, attr);
 const div = (content = null, attr = {}) => htmlTag('div', content, attr);
 const script = (src = null, attr = {}) => htmlTag('script', null, {src: src, ...attr});
 
-module.exports = {htmlTag, doc, html, head, meta, link, title, body, h1, h2, h3, p, a, div, script};
+module.exports = {htmlTag, doc, html, head, meta, link, title, body, header, h1, h2, h3, h4, h5, p, a, ul, li, div, script};
