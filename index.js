@@ -2,8 +2,10 @@ const path = require('path');
 const {writeFile} = require('fs');
 
 const {Manager, Engineer, Intern} = require('./lib/employee');
-const {doc, head, meta, title, body, header, h1, h4, h5, p, a, ul, li, div} = require('./src/html');
+const {doc, head, meta, title, body, header, h1, h3, h5, a, ul, li, div} = require('./src/html');
 const bootstrap = require('./src/bootstrap');
+const fontawesome = require('./src/fontawesome');
+const i = fontawesome.i;
 
 // standard write logging for errors
 const logWriteErr = (err) => {
@@ -51,11 +53,52 @@ function writeOutput(document, outputDir) {
     }
 }
 
+const createEmployeeCard = (employee) => div([
+    // card header
+    div([
+        // top header with employee name
+        h3(employee.getName()),
+        //employee role with icon
+        h5([
+            // selects the FA icon
+            () => {
+                switch(employee.getRole()) {
+                    case 'Manager': return i(null, {class: ['fas', 'fa-mug-hot']});
+                    case 'Engineer': return i(null, {class: ['fas', 'fa-glasses']});
+                    case 'Intern': return i(null, {class: ['fas', 'fa-user-graduate']});
+                    default: return null;
+                }
+            }, ` ${employee.getRole()}` // appends the employee role next to the icon
+        ])
+    ], {class: ['card-header', 'text-bg-primary']}),
+
+    // card content
+    div([
+        // unordered list
+        ul([
+            // employee ID list item
+            li(['ID: ', employee.getId()], {class: ['list-group-item']}),
+            // employee email list item
+            li([`Email: `, a(`mailto:${employee.getEmail()}`, employee.getEmail())], {class: ['list-group-item']}),
+            // employee role-specific information item
+            li(() => {
+                switch(employee.getRole()) {
+                    case 'Manager': return `Office number ${employee.getOfficeNumber()}`;
+                    case 'Engineer':
+                        let github = employee.getGithub();
+                        return [`GitHub: `, a(`https://github.com/${github}`, github)];
+                    case 'Intern': return `School: ${employee.getSchool()}`;
+                    default: return null;
+                }
+            }, {class: ['list-group-item']})
+        ], {class: ['list-group', 'mx-3', 'my-5']})
+    ], {class: []})
+], {class: ['card', 'm-3', 'w-25']});
+
 // our application run function
 function run() {
     // get our output path
     let output = outputPath();
-    // generate document string
 
     // TODO implement team members via user input using inquirer
     let employees = [
@@ -71,11 +114,14 @@ function run() {
             // meta-data
             meta({charset: 'utf-8'}),
 
+            // include fontawesome styles
+            fontawesome.css(),
+
             // include bootstrap styles
             bootstrap.css(),
 
             // page title
-            title('Title Here')
+            title('My Team')
         ]),
 
         // main body content
@@ -84,35 +130,7 @@ function run() {
             header([h1('My Team')], {class: ['d-flex', 'justify-content-center', 'p-5', 'mb-3', 'text-bg-success']}),
 
             // main body container
-            div(employees.map(value => {
-                let listItemClasses = ['list-group-item'];
-                return div([
-                    div([
-                        h4(value.getName()),
-                        h5(value.getRole())
-                    ], {class: ['card-header', 'text-bg-primary']}),
-                    div(
-                        ul([
-                            li(`ID: ${value.getId()}`, {class: listItemClasses}),
-                            li([`Email: `, a(`mailto:${value.getEmail()}`, value.getEmail())], {class: listItemClasses}),
-                            li(() => {
-                                switch(value.getRole()) {
-                                    case 'Manager':
-                                        return `Office number: ${value.getOfficeNumber()}`;
-                                    case 'Engineer':
-                                        let github = value.getGithub();
-                                        return [`GitHub: `, a(`https://github.com/${github}`, github)];
-                                    case 'Intern':
-                                        return `School: ${value.getSchool()}`;
-                                    default:
-                                        return null;
-                                }
-                            }, {class: listItemClasses})
-                        ], {class: ['list-group', 'mx-3', 'my-5']}),
-                        {class: ['card']}
-                    )
-                ], {class: ['card', 'w-25', 'm-3']});
-            }), {class: ['d-flex', 'container-fluid', 'justify-content-center', 'flex-wrap']}),
+            div(employees.map(createEmployeeCard), {class: ['d-flex', 'container-fluid', 'justify-content-center', 'flex-wrap']}),
 
             // include bootstrap script for page functionality
             bootstrap.js()
