@@ -3,7 +3,6 @@ const {writeFile} = require('fs');
 
 const menu = require('./src/menu');
 
-const {Manager, Engineer, Intern} = require('./lib/employee');
 const {doc, head, meta, title, body, header, h1, h3, h5, a, ul, li, div} = require('./src/html');
 const bootstrap = require('./src/bootstrap');
 const fontawesome = require('./src/fontawesome');
@@ -85,7 +84,7 @@ const createEmployeeCard = (employee) => div([
             // employee role-specific information item
             li(() => {
                 switch(employee.getRole()) {
-                    case 'Manager': return `Office number ${employee.getOfficeNumber()}`;
+                    case 'Manager': return `Office number: ${employee.getOfficeNumber()}`;
                     case 'Engineer':
                         let github = employee.getGithub();
                         return [`GitHub: `, a(`https://github.com/${github}`, github)];

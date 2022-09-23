@@ -1,34 +1,27 @@
 const inquirer = require('inquirer');
 const {Manager, Engineer, Intern} = require('../lib/employee');
 
-const generateTeamMemberQuestions = (choice) => [
-    {
-        type: 'input',
-        name: 'name'
-    },
-    {
-        type: 'input',
-        name: 'id'
-    },
-    {
-        type: 'input',
-        name: 'email'
-    },
-    {
-        type: 'input',
-        name: 'officeNumber',
-        when: choice === 'Manager'
-    },
-    {
-        type: 'input',
-        name: 'github',
-        when: choice === 'Engineer'
-    },
-    {
-        type: 'input',
-        name: 'school',
-        when: choice === 'Intern'
-    },
+class Question {
+    constructor(name, type, forType = null, messageName = name) {
+        this.type = 'input';
+        this.name = name;
+        if(forType !== null) {
+            this.when = type === forType;
+        }
+        if(validate !== null) {
+            this.validate = validate;
+        }
+        this.message = `Enter the ${messageName} of the ${type.toLowerCase()}:`;
+    }
+}
+
+const generateTeamMemberQuestions = (type) => [
+    new Question('name', type),
+    new Question('id', type),
+    new Question('email', type),
+    new Question('officeNumber', type, 'Manager', 'office number'),
+    new Question('github', type, 'Engineer'),
+    new Question('school', type, 'Intern'),
     {
         type: 'list',
         name: 'answer',
@@ -62,4 +55,4 @@ function newTeamMemberPrompt(employees, type) {
 
 module.exports = () => {
     return newTeamMemberPrompt([], 'Manager');
-}
+};
