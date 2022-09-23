@@ -132,7 +132,7 @@ function parseValue(content) {
             if(content.toHTMLString) {
                 text += content.toHTMLString(); //
             } else {
-                throw 'Normal JS Objects not allowed!';
+                throw 'Normal JS Objects not allowed: ' + JSON.stringify(content);
             }
         }
     } else { // else just append
