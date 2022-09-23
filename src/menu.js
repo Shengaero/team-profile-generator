@@ -8,9 +8,6 @@ class Question {
         if(forType !== null) {
             this.when = type === forType;
         }
-        if(validate !== null) {
-            this.validate = validate;
-        }
         this.message = `Enter the ${messageName} of the ${type.toLowerCase()}:`;
     }
 }
