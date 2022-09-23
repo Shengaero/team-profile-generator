@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/Shengaero/team-profile-generator#readme",
   "dependencies": {
-    "inquirer": "^9.1.2"
+    "inquirer": "^8.2.4"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
