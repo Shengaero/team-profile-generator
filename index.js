@@ -1,6 +1,8 @@
 const path = require('path');
 const {writeFile} = require('fs');
 
+const menu = require('./src/menu');
+
 const {Manager, Engineer, Intern} = require('./lib/employee');
 const {doc, head, meta, title, body, header, h1, h3, h5, a, ul, li, div} = require('./src/html');
 const bootstrap = require('./src/bootstrap');
@@ -95,50 +97,45 @@ const createEmployeeCard = (employee) => div([
     ], {class: []})
 ], {class: ['card', 'm-3', 'w-25']});
 
+const generateHTML = (employees) => doc([
+    head([
+        // meta-data
+        meta({charset: 'utf-8'}),
+
+        // include fontawesome styles
+        fontawesome.css(),
+
+        // include bootstrap styles
+        bootstrap.css(),
+
+        // page title
+        title('My Team')
+    ]),
+
+    // main body content
+    body([
+        // header
+        header([h1('My Team')], {class: ['d-flex', 'justify-content-center', 'p-5', 'mb-3', 'text-bg-success']}),
+
+        // main body container
+        div(employees.map(createEmployeeCard), {class: ['d-flex', 'container-fluid', 'justify-content-center', 'flex-wrap']}),
+
+        // include bootstrap script for page functionality
+        bootstrap.js()
+    ])
+]);
+
 // our application run function
 function run() {
     // get our output path
     let output = outputPath();
-
-    // TODO implement team members via user input using inquirer
-    let employees = [
-        new Manager('Jared', 1, 'jared@fakemail.com', 1),
-        new Engineer('Alec', 2, 'alec@fakemail.com', 'ibealec'),
-        new Engineer('Grace', 3, 'grace@fakemail.com', 'gchoi2u'),
-        new Engineer('Tammer', 4, 'tammer@fakemail.com', 'tammerg'),
-        new Intern('John', 5, 'john@fakemail.com', '2University')
-    ];
-
-    let document = doc([
-        head([
-            // meta-data
-            meta({charset: 'utf-8'}),
-
-            // include fontawesome styles
-            fontawesome.css(),
-
-            // include bootstrap styles
-            bootstrap.css(),
-
-            // page title
-            title('My Team')
-        ]),
-
-        // main body content
-        body([
-            // header
-            header([h1('My Team')], {class: ['d-flex', 'justify-content-center', 'p-5', 'mb-3', 'text-bg-success']}),
-
-            // main body container
-            div(employees.map(createEmployeeCard), {class: ['d-flex', 'container-fluid', 'justify-content-center', 'flex-wrap']}),
-
-            // include bootstrap script for page functionality
-            bootstrap.js()
-        ])
-    ]);
-
-    // write the document to the output path
-    writeOutput(document, output);
+    // generate menu, then
+    menu().then(employees => {
+        // when the user is done, generate the HTML using the list of employees
+        let document = generateHTML(employees);
+        // write the document to the output path
+        writeOutput(document, output);
+    })
 }
 
 // run program
