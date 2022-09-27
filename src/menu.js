@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
-const {Manager, Engineer, Intern} = require('../lib/employee');
+const Manager = require('../lib/manager');
+const Engineer = require('../lib/engineer');
+const Intern = require('../lib/intern');
 
 class Question {
     constructor(name, type, forType = null, messageName = name) {
