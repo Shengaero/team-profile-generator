@@ -16,6 +16,8 @@ To install this project, clone it via SSH to your local machine and run `npm ins
 ## Usage
 Run this using `node index.js` from the installation directory, and a HTML page will be outputted to the `/dist` subdirectory.
 
+[Here's a video showing how it works](https://www.youtube.com/watch?v=SLsAG6v_GPs)
+
 ## Contibution
 Not accepting contributions at this time.
 
